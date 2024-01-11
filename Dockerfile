@@ -27,6 +27,7 @@ RUN apk -v --update add \
 ENV BACKUP_CREATE_DATABASE_STATEMENT=false
 ENV TARGET_DATABASE_PORT=3306
 ENV SLACK_ENABLED=false
+ENV GOOGLE_CHAT_ENABLED=false
 ENV SLACK_USERNAME=kubernetes-s3-mysql-backup
 ENV CLOUD_SDK_VERSION=367.0.0
 # Release commit for https://github.com/FiloSottile/age/tree/v1.0.0
