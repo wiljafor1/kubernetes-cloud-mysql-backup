@@ -1,16 +1,20 @@
 #!/bin/sh
 
-echo -e "Sending google chat webhook $1"
+echo "Sending Google Chat webhook: $1"
 
-if [ "$(printf '%s' "$2")" == '' ]
-then
-PAYLOAD="payload={\"text\": \"$1\"}"
+if [ -z "$GOOGLE_WEBHOOK_URL" ]; then
+    echo "Error: GOOGLE_WEBHOOK_URL not set."
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    PAYLOAD='{"text": "'"$1"'"}'
 else
-PAYLOAD="payload={\"text\": \"$1\`\`\`$(echo $2 | sed "s/\"/'/g")\`\`\`\"}"
+    PAYLOAD='{"text": "'"$1"'```'"$(echo "$2" | sed 's/"/'\''/g')"'\```"}'
 fi
 
 if [ -n "$SLACK_PROXY" ]; then
-    curl -s --proxy $SLACK_PROXY -X POST --data "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" --header 'Content-Type: application/json' > /dev/null
+    curl -s --proxy "$SLACK_PROXY" -X POST --data-raw "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" --header 'Content-Type: application/json'
 else
-    curl -s -X POST --data "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" --header 'Content-Type: application/json' > /dev/null
+    curl -s -X POST --data-raw "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" --header 'Content-Type: application/json'
 fi
