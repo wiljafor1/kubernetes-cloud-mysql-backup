@@ -21,6 +21,7 @@ RUN apk -v --update add \
     git && \
     pip3 install --upgrade awscli s3cmd python-magic && \
     rm /var/cache/apk/*
+    
 
 # Set Default Environment Variables
 ENV BACKUP_CREATE_DATABASE_STATEMENT=false
