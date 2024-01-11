@@ -3,6 +3,7 @@ FROM alpine:3.15.0
 
 # Install required packages
 RUN apk -v --update add \
+    mariadb-connector-c \
     python3 \
     py-pip \
     groff \
