@@ -10,7 +10,7 @@ PAYLOAD="payload={\"text\": \"$1\`\`\`$(echo $2 | sed "s/\"/'/g")\`\`\`\"}"
 fi
 
 if [ -n "$SLACK_PROXY" ]; then
-    curl -s --proxy $SLACK_PROXY -X POST --data-urlencode "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" > /dev/null
+    curl -s --proxy $SLACK_PROXY -X POST --data "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" --header 'Content-Type: application/json' > /dev/null
 else
-    curl -s -X POST --data-urlencode "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" > /dev/null
+    curl -s -X POST --data "$PAYLOAD" "$GOOGLE_WEBHOOK_URL" --header 'Content-Type: application/json' > /dev/null
 fi
