@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo -e "Sending google chat webhook $1"
+
 if [ "$(printf '%s' "$2")" == '' ]
 then
 PAYLOAD="payload={\"text\": \"$1\"}"
